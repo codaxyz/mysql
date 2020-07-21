@@ -14,6 +14,7 @@ import (
 	"database/sql/driver"
 	"io"
 	"net"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
@@ -91,6 +92,7 @@ func (mc *mysqlConn) Begin() (driver.Tx, error) {
 func (mc *mysqlConn) begin(readOnly bool) (driver.Tx, error) {
 	if mc.closed.IsSet() {
 		errLog.Print(ErrInvalidConn)
+		debug.PrintStack()
 		return nil, driver.ErrBadConn
 	}
 	var q string
