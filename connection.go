@@ -370,6 +370,7 @@ func (mc *mysqlConn) Query(query string, args []driver.Value) (driver.Rows, erro
 
 func (mc *mysqlConn) query(query string, args []driver.Value) (*textRows, error) {
 	if mc.closed.IsSet() {
+		debug.PrintStack()
 		errLog.Print(ErrInvalidConn)
 		return nil, driver.ErrBadConn
 	}
